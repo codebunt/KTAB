@@ -50,29 +50,31 @@ function GraphData(file, onloaddb) {
             var id1 = from + " - " + bgn;
             var id2 = bgn + " - " + to;
             var toself = (from == to);
-            __this.linksByBid[id1] = {
-                source: from,
-                target: bgn,
-                strength: 2.0,
-                dist: 50,
-                type: "tob",
-                toself: toself,
-                accepted: false
-            };
-            __this.linksByBid[id2] = {
-                source: bgn,
-                target: to,
-                strength: 2.0,
-                dist: 50,
-                type: "fromb",
-                toself: toself,
-                accepted: false
-            };
-            __this.actorsById[bgn] = {
-                id: bgn,
-                label: '',
-                type: 'bargain'
-            };
+            if(!toself) {
+                __this.linksByBid[id1] = {
+                    source: from,
+                    target: bgn,
+                    strength: 2.0,
+                    dist: 50,
+                    type: "tob",
+                    toself: toself,
+                    accepted: false
+                };
+                __this.linksByBid[id2] = {
+                    source: bgn,
+                    target: to,
+                    strength: 2.0,
+                    dist: 50,
+                    type: "fromb",
+                    toself: toself,
+                    accepted: false
+                };
+                __this.actorsById[bgn] = {
+                    id: bgn,
+                    label: '',
+                    type: 'bargain'
+                };
+            }
         });
 
         var acceptedBgn = __this.db.exec("select B.*, AI.Name as Init, AR.Name as Rcvr" +
